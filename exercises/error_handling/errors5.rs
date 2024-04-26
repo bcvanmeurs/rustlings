@@ -22,14 +22,19 @@
 // Execute `rustlings hint errors5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::error;
 use std::fmt;
 use std::num::ParseIntError;
 
 // TODO: update the return type of `main()` to make this compile.
-fn main() -> Result<(), Box<dyn ???>> {
+// Check out this section of the book:
+// https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
+// Read more about boxing errors:
+// https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
+// Read more about using the `?` operator with boxed errors:
+// https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+
+fn main() -> Result<(), Box<dyn error::Error>> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
     println!("output={:?}", PositiveNonzeroInteger::new(x)?);
