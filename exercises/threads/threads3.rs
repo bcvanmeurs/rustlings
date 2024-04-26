@@ -3,7 +3,7 @@
 // Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// https://doc.rust-lang.org/book/ch16-02-message-passing.html
 
 use std::sync::mpsc;
 use std::sync::Arc;
@@ -31,6 +31,9 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     let qc1 = Arc::clone(&qc);
     let qc2 = Arc::clone(&qc);
 
+    // copy the producer
+    let tx2 = tx.clone();
+
     thread::spawn(move || {
         for val in &qc1.first_half {
             println!("sending {:?}", val);
@@ -38,11 +41,10 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
             thread::sleep(Duration::from_secs(1));
         }
     });
-
     thread::spawn(move || {
         for val in &qc2.second_half {
             println!("sending {:?}", val);
-            tx.send(*val).unwrap();
+            tx2.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
     });
